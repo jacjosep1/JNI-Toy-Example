@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+            "${workspaceFolder}/**",
+            "/usr/lib/jvm/java-21-openjdk-amd64/include",
+            "/usr/lib/jvm/java-21-openjdk-amd64/include/linux"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
