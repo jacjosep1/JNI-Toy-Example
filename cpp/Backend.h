@@ -23,6 +23,14 @@ JNIEXPORT jobject JNICALL Java_Backend_allocate
 JNIEXPORT void JNICALL Java_Backend_fill
   (JNIEnv *, jobject, jfloat);
 
+/*
+ * Class:     Backend
+ * Method:    linkMatrix
+ * Signature: ()LCsrMatrix;
+ */
+JNIEXPORT jobject JNICALL Java_Backend_linkMatrix
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

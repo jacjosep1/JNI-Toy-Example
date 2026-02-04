@@ -25,5 +25,19 @@ public class Main {
         for (int i = 0; i < N; i++) {
             System.out.println(fb.get(i));
         }
+
+        // CSR matrix test
+        CsrMatrix m1 = b.linkMatrix();
+
+        System.out.println(m1.indptr.get(0));
+        System.out.println(m1.data.get(0));
+
+        CsrMatrix m2 = b.linkMatrix();
+        m2.indptr.put(0, 7);
+        m2.data.put(0, 8);
+
+        // Print m1 again to verify we are sharing the same data - should print 7, 8
+        System.out.println(m1.indptr.get(0));
+        System.out.println(m1.data.get(0));
     }
 }
