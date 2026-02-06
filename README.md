@@ -1,3 +1,5 @@
+
+# JNI Toy Example
 ## Installation
 Java installation
 ```
@@ -9,4 +11,12 @@ export PATH=$JAVA_HOME/bin:$PATH
 Build
 ```
 ./build.sh
+```
+
+# Incidence Data Structure
+## Installation
+Requires Python 3.12.3 or similar.  
+```
+python -m venv venv
+pip install -r requirements.txt
 ```
