@@ -101,6 +101,7 @@ class TopDownSorting:
 
         combined_H = sp.vstack(stack_H)
         combined_W = np.hstack(stack_W)
+        print(f'Links at n={n} : {combined_links}')
 
         return combined_H, combined_W, combined_links
     
