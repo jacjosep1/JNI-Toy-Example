@@ -29,13 +29,18 @@ class TopDownSorting:
                  weights W of length d with d < k
                  new links of length d for each d new edges
         '''
+        print(f"expanding edge {link}")
         # Build map {binned vertices in edge} -> frequency
         insertion_map : dict[tuple[int, ...], int] = defaultdict(int)
         weights_map : dict[tuple[int, ...], float] = defaultdict(float)
         link_map : dict[tuple[int, ...], list[int]] = defaultdict(list[int]) # Keep track of which raw edges correspond to subedges
         for raw_edge in link:
             # Bin raw edges in this link according to new resolution n
-            cols = tuple(np.floor(self.nz_columns(self.raw_data, raw_edge) / n_new).astype(int))
+            n_old = self.raw_data.shape[1]
+            bin_size = n_old / n_new
+            cols = tuple(np.unique(
+                np.floor(self.nz_columns(self.raw_data, raw_edge) / bin_size).astype(int)
+            ))
             insertion_map[cols] += 1
             weights_map[cols] += self.raw_weights[raw_edge]
             link_map[cols].append(raw_edge)
@@ -118,8 +123,9 @@ class TopDownSorting:
         output = []
 
         current_n = min_n / 2
-        while current_n <= max_n:
+        while current_n < max_n:
             cached = self.sort_at_resolution(current_n, prev_links)
+            print(f"Sorted resolution {current_n}")
             H, _, combined_links = cached
             _, current_n = H.shape
             prev_links = combined_links
