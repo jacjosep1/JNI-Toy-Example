@@ -3,6 +3,8 @@ import scipy.sparse as sp
 import numpy as np
 from collections import defaultdict
 
+from vis import *
+
 class TopDownSorting:
 
     def __init__(self, raw_data: csr_matrix, raw_weights : np.ndarray):
@@ -11,6 +13,7 @@ class TopDownSorting:
 
 
     def nz_columns(self, A : csr_matrix, row : int):
+        assert 0 <= row < A.shape[0]
         return np.array(A.indices[A.indptr[row] : A.indptr[row + 1]])
     
 
@@ -26,29 +29,32 @@ class TopDownSorting:
                  weights W of length d with d < k
                  new links of length d for each d new edges
         '''
-        k = len(link)
-
         # Build map {binned vertices in edge} -> frequency
-        insertion_map : map[tuple, int] = defaultdict(int)
-        weights_map : map[tuple, float] = defaultdict(float)
-        link_map : map[tuple, list[int]] = defaultdict(list[int]) # Keep track of which raw edges correspond to subedges
+        insertion_map : dict[tuple[int, ...], int] = defaultdict(int)
+        weights_map : dict[tuple[int, ...], float] = defaultdict(float)
+        link_map : dict[tuple[int, ...], list[int]] = defaultdict(list[int]) # Keep track of which raw edges correspond to subedges
         for raw_edge in link:
             # Bin raw edges in this link according to new resolution n
             cols = tuple(np.floor(self.nz_columns(self.raw_data, raw_edge) / n_new).astype(int))
             insertion_map[cols] += 1
-            weights_map[cols] += self.raw_data[raw_edge]
+            weights_map[cols] += self.raw_weights[raw_edge]
             link_map[cols].append(raw_edge)
 
         # Build csr matrix from map with d << k
         d = len(insertion_map)
-        sub_csr = csr_matrix((d, n_new))
         sub_W = np.zeros(d)
         sub_links : list[list[int]] = [[] for _ in range(d)]
+        sub_csr_rows = []
+        sub_csr_cols_all = []   
 
         for i, (cols, _) in enumerate(insertion_map.items()):
-            sub_csr[i, list(cols)] = 1
+            sub_csr_rows.extend([i] * len(cols))
+            sub_csr_cols_all.extend(cols)
             sub_W[i] = weights_map[cols]
-            sub_links[i] = sub_links[cols]
+            sub_links[i] = link_map[cols]
+        data = np.ones(len(sub_csr_rows))
+        sub_csr = csr_matrix((data, (sub_csr_rows, sub_csr_cols_all)), shape=(d, n_new))
+
 
         # Sort lexicographically by vertex position
         def lex_key(A: csr_matrix, i: int):
@@ -59,17 +65,16 @@ class TopDownSorting:
         order = sorted(range(d), key = lambda i: lex_key(sub_csr, i))
         sub_csr = sub_csr[order]
         sub_W = sub_W[order]
-        sub_links = sub_links[order]
+        sub_links = [sub_links[i] for i in order]
 
         return sub_csr, sub_W, sub_links
 
 
 
-    def sort_at_resolution(self, m : int, n : int, prev_links : list[list[int]]):
+    def sort_at_resolution(self, n : float, prev_links : list[list[int]]):
         '''
         Main function for computing H & W at each resolution given the previous smaller one. 
 
-        m: previous # edges
         n: previous resolution
         prev_links: list of size m, maps to all raw edges aggregated into each row of prev_H
                     In the actual program, these will point to locations to a raw datafile on disk,
@@ -77,7 +82,8 @@ class TopDownSorting:
 
         returns: higher resolution incidence H, edge weights W, and new links
         '''
-        n_new = n * 2
+        n_new = int(n * 2)
+        m = len(prev_links)
 
         stack_H = []
         stack_W = []
@@ -93,3 +99,30 @@ class TopDownSorting:
         combined_W = np.hstack(stack_W)
 
         return combined_H, combined_W, combined_links
+    
+    
+    def build_cache(self, resolution_range : tuple[int, int]):
+        '''
+        Main function for computing all resultions by iteratively calling sort_at_resolution. 
+
+        resolution_range: (min #bins, max #bins). Should be powers of 2. 
+        returns: list of tuples: [(H, W, links), ...]
+        '''
+
+        min_n, max_n = resolution_range
+
+        # Starting link: one 'super edge' linked to everything in data. 
+        # This is the most convenient thing to do for now. 
+        m = len(self.raw_weights)
+        prev_links : list[list[int]] = [list(range(m))]
+        output = []
+
+        current_n = min_n / 2
+        while current_n <= max_n:
+            cached = self.sort_at_resolution(current_n, prev_links)
+            H, _, combined_links = cached
+            _, current_n = H.shape
+            prev_links = combined_links
+            output.append(cached)
+
+        return output
