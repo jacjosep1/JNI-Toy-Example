@@ -1,0 +1,24 @@
+eigenfilter_learning:
+  default_expansion: "Clique"
+  override_k: 20
+  num_workers: 16
+  model_path: "out/models/{architecture}/{architecture}_epoch_{epoch}.pth"
+  architecture: "EigenCNN" # "EigenCNN", "EigenFilter"
+
+  train:
+    enabled: false
+    num_pairs: 20000 #20000
+    num_groups: 50 #50
+    cache_path: "out/cache/ML/data_cache.pkl"
+    load_cache: true
+    num_epochs: 100
+    batch_size: 128 #128
+    learning_rate: 0.001
+    weight_decay: 0.0001
+
+  validate:
+    enabled: false # Whether to run validation separately on some checkpoint
+    cache_path: "out/cache/ML/data_cache_validate.pkl"
+    num_pairs: 128
+    num_groups: 10
+    epoch_to_load: 90

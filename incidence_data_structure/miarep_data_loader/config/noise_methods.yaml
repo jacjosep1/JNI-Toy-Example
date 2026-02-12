@@ -1,0 +1,4 @@
+data_source: "ChIA_Drop" # one of ChIA_Drop, SPRITE, Data_Generator
+num_levels: 10
+visualize_adj: true
+on_pair: false # If true, progressively add noise to a rep pair. Otherwise, compare single original to a noisy version. 

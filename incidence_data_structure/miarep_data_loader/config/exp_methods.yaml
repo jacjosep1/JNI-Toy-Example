@@ -1,0 +1,10 @@
+expansion_methods:
+enabled :               false   # Whether to test over expansions at fixed method
+default_method :        "TopEval"
+filter:
+  Clique :              false
+  Star :                false
+  Line :                false
+  RankClique :          false
+  ClusteringClique :    false
+  PrintEigenspectrum :  false

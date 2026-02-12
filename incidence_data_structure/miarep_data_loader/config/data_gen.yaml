@@ -1,0 +1,63 @@
+Data_Generator:
+  enabled: false
+  num_bins: 80
+  dump_edge_histogram : false # only set to true when recording from existing data we want to model
+  dump_edge_histogram_path : "mia_rep/edge_histogram.pkl"
+  visualize_adj: true # visualize adjacency matrix for expansion method
+  TAD_density: 3.0
+  noise_level: 0.0 # 1 indicates full noise, 0 is no noise
+  num_poi:     [6, 6] # number of structure (TAD,loop,etc) boundaries
+  high_order_size: 20 # high order edge order
+
+  nonrep_settings:
+    num_replicate_groups: 2 # number of groups (non-replicate between groups)
+    randomize_POI:        false
+    random_TAD_prob:        0.0
+    random_loop_prob:       0.0
+    random_stripe_prob:     0.0
+    random_loop_TAD_prob:   0.0
+    random_stripe_TAD_prob: 0.0
+    random_dense_prob:      1.0 # generate random high-order edge with low order support
+    random_sigma:    5
+
+  rep_settings:
+    num_replicates: 2 # number of replicates to generate in a group
+    seq_depth_variation: 0.0 # max prune percentage for randomizing sequence depth (.5)
+    high_order_noise: 0.3 # Generate high-order edges that are indicative of noise (.05, .2)
+    high_order_noise_groups: 20 # number of unique large hyperedges in the noise
+
+ChiaDrop_Generator:
+  enabled: false
+  num_bins: 140
+  noise_level: 10.0 # use for uncorrelated noisy edges
+  TAD_density: 4.0
+  high_order_size: 20
+  visualize_adj: true
+  num_poi:     [6, 10]
+  dump_edge_histogram_path : "mia_rep/edge_histogram.pkl"
+
+  nonrep_settings:
+    num_replicate_groups: 4
+    randomize_POI:        true
+    peak_size:  [10., 35.]
+    convergent_peaks_proportion: 0.6
+    random_sigma: 2
+
+  rep_settings:
+    num_replicates: 3
+    seq_depth_variation: .5
+    real_peaks:
+      str_sigma: 5.
+      width: .8
+    random_peaks:
+      str: 4.
+      str_sigma: 2.
+      width: .4
+      mean_dist: 4. # on average how far apart the peaks should be
+    background_gaussian_noise:
+      mean: 1.
+      sigma: .5
+    real_edges:
+      max_dist: 50 # max distance in # bins
+      density: 200. # mean incidences per real peak
+      proportion_spanning: 0.1 # proportion of edges that should span over peaks

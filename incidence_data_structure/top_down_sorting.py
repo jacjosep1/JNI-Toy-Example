@@ -12,9 +12,14 @@ class TopDownSorting:
         self.raw_weights = raw_weights
 
 
-    def nz_columns(self, A : csr_matrix, row : int):
-        assert 0 <= row < A.shape[0]
-        return np.array(A.indices[A.indptr[row] : A.indptr[row + 1]])
+    def nz_columns(self, A: csr_matrix, row: int):
+        if not (0 <= row < A.shape[0]):
+            raise ValueError(f"row {row} out of bounds for shape {A.shape}")
+        if not (row + 1 < len(A.indptr)):
+            raise ValueError(f"row {row} out of bounds for indptr of len {len(A.indptr)} for shape{A.shape}")
+
+        start, end = A.indptr[row], A.indptr[row + 1]
+        return A.indices[start:end]
     
 
     def expand_edge(self, link : list[int], n_new : int):
@@ -101,7 +106,6 @@ class TopDownSorting:
 
         combined_H = sp.vstack(stack_H)
         combined_W = np.hstack(stack_W)
-        print(f'Links at n={n} : {combined_links}')
 
         return combined_H, combined_W, combined_links
     

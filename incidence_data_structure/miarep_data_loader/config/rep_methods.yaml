@@ -1,0 +1,147 @@
+
+
+
+SimpleCorrelation:
+  enabled:              false
+
+# ----------------------
+# Primary methods
+# ----------------------
+
+HiC-Rep-Baseline: # Use seq depth adjustment on A   
+  enabled:              false
+  filter_size:          5       # Size of the mean filter used in HiC-Rep (default=5)
+  max_dist:             5e6     # Maximum genomic distance to consider (in bp, default=5Mb)
+  KR_balancing:         true
+
+HiC-Rep-Custom: # Use seq depth adjustment on H
+  enabled:              true
+  filter_size:          3
+  max_dist:             5e6
+
+SparseSKPearson_Reg:
+  enabled:              false
+  lambda:               0.1
+  max_iterations:       4000
+  tolerance:            1e-3
+
+SparseSKPearson_Sym:
+  enabled:              false
+  lambda:               0.1
+
+# ----------------------
+# Misc methods
+# ----------------------
+
+ZeroScore: # use for debugging malformed matrices
+  enabled:              false
+
+HiC-Spector :         
+  enabled:              false
+  num_evecs:            20      # Number of top eigenpairs for comparison in HiC-Spector (default=20)
+
+GenomeDisco :         
+  enabled:              false
+  tmin:                 3       # min walk length (default=3)
+  tmax:                 3       # max walk length (default=3)
+  remove_diag:          true    # Sets diagonal to 0 (default=True)
+
+TopEval :             
+  enabled:              false
+  num_evals:            10      # how many smallest evals to consider
+  norm:                 false   # If true, normalize the eigenspectrum vector
+  p:                    1       # L-p distance
+  gamma:                1       # sharpness of eigenspectrum comparison. Increase if scores are too close to 1, decrease if too close to -1. 
+TopEvalKDE :          
+  enabled:              false
+  num_evals:            1      # how many smallest evals to consider
+  norm:                 false   # If true, normalize the eigenspectrum vector
+  p:                    1       # L-p distance
+  gamma:                .6      # sharpness of eigenspectrum comparison. Increase if scores are too close to 1, decrease if too close to -1. 
+  bandwidth:            "scott" # KDE bandwidth method
+  num_points:           1000    # num points to use for KDE integration
+TopEvalPearson :      
+  enabled:              false
+  num_evals:            10      # how many smallest evals to consider
+  norm:                 false   # If true, normalize the eigenspectrum vector
+TopEvalCosine :       
+  enabled:              false
+  num_evals:            10      # how many smallest evals to consider
+  norm:                 false   # If true, normalize the eigenspectrum vector
+TopEvalWasserstein :  
+  enabled:              false
+  num_evals:            10      # how many smallest evals to consider
+  norm:                 false   # If true, normalize the eigenspectrum vector
+
+EigenvectorFilter:
+  enabled:              false
+  max_evals:            20
+  kernel:               [-1, 1]
+  initial_gaussian:     0.7 #0.7
+  sigma_h:              5 #20
+  sigma_v:              5 #2
+  importance_pow:       2 #2
+  sigma_h_max:          7.0 #7
+  epair_lower_bound:    1
+EigenvectorFilterStar:
+  enabled:              false
+  max_evals:            20
+  kernel:               [-1, 1]
+  initial_gaussian:     0.7 #0.7
+  sigma_h:              4 #20
+  sigma_v:              1.5 #2
+  importance_pow:       1 #2
+  sigma_h_max:          7.0 #7
+  epair_lower_bound:    1
+LearnedEigenvectorFilter:
+  enabled:              false
+  model_path: "models/eigenfilter.pth"
+LearnedEigenvectorCNN:
+  enabled:              false
+  model_path: "models/eigenCNN.pth"
+
+TensorTopEval:
+  enabled:             false
+
+HungarianCosine:
+  enabled:             false
+HungarianPearson:
+  enabled:             false
+HungarianMax:
+  enabled:             false
+HungarianEM:
+  enabled:             false
+
+OtCosine:
+  enabled:             false
+FastMatchCosine:
+  enabled:              false
+FastMatchCosineFiltered:
+  enabled:              false
+  sigma:                2
+SparseSKCosine: 
+  enabled:              false
+SparseSKCosineFiltered:
+  enabled:              false
+  sigma:                2
+SparseSKCosine_Reg:
+  enabled:              false
+  lambda:               0.1
+
+SK_lam_1ep2:
+  enabled:              false
+SK_lam_1ep1:
+  enabled:              false
+SK_lam_1ep0:
+  enabled:              false
+SK_lam_1em1:
+  enabled:              false
+SK_lam_1em2:
+  enabled:              false
+SK_lam_1em3:
+  enabled:              false
+SK_lam_1em4:
+  enabled:              false
+
+LP_procedure:
+  enabled:              false

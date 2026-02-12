@@ -1,0 +1,320 @@
+name: run
+chr: '19'
+bin_size: 50e3
+genomic_range_enabled: false
+genomic_range:
+- 80e6
+- 120e6
+do_logging: true
+num_workers_encode: none
+visualization:
+  visualize_edge_histogram: false
+  visualize_edge_order_fits:
+    power: false
+    exponential: false
+  visualize_genomic_dist: false
+  visualize_dendogram: true
+  verbose_labels: false
+  visualize_diff_vs_undiff: false
+data_adjustment:
+  hyperedge_range:
+  - 2
+  - 100
+baseline: none
+data:
+  proportion: 1
+  ChIA_Drop:
+    enabled: false
+    cache_path: out/cache/ChIA_Drop/{fname}.pkl
+    load_cache: true
+    save_cache: true
+    force_cache: true
+    path_template: Data/GM12878-{protein}-Rep{rep}_comp_chr{chr}_FDR_0.2_pseudoGEM_500_enrichTest_master.txt
+    bedgraph_path_template: Data/GM12878-{protein}-Rep{rep}_comp_sing_FDR_0.2_PASS.bedgraph
+    proteins:
+    - CTCF
+    - RNAPII
+    - RAD21
+    - SMC1A
+    reps:
+    - 1
+    - 2
+    - 3
+    visualize_adj: false
+  SPRITE:
+    enabled: true
+    cache_path: out/cache/SPRITE/{fname}.pkl
+    load_cache: true
+    save_cache: true
+    force_cache: true
+    path_template: Data/GM12878-SPRITE.byChromosome.clusters.renameid.grouped
+    visualize_adj: false
+    data:
+      GM12878:
+        enabled: true
+        fname:
+          1: Data/GM12878-SPRITE.byChromosome.clusters.renameid.grouped
+        format: Format_GM12878
+        rep_type: letter
+      H1_hESC_diff:
+        enabled: false
+        fname:
+          1: Data/H1-hESC_diff_rep1.clusters
+        format: Format_H1_hESC
+        rep_type: none
+      H1_hESC_undiff_rep1:
+        enabled: tfalsee
+        fname:
+          1: Data/H1-hESC_undiff_rep1.clusters
+          2: Data/H1-hESC_undiff_rep2.clusters
+        format: Format_H1_hESC
+        rep_type: none
+      HFFc6:
+        enabled: false
+        fname:
+          1: Data/HFFc6_rep1-3.clusters
+        format: Format_HFFc6
+        rep_type: finder
+        rep_finder: Data/HFFc6_sets.pickle
+      F121mESC:
+        enabled: false
+        fname:
+          1: Data/F121mESC_all_mm10.clusters
+        format: Format_HFFc6
+        rep_type: none
+      P22_CB:
+        enabled: false
+        fname:
+          1: Data/P22_CB_SPRITE_WT1_2-1000r.clusters
+          2: Data/P22_CB_SPRITE_WT2_2-1000r.clusters
+        format: Format_HFFc6
+        rep_type: none
+  Data_Generator:
+    enabled: false
+    num_bins: 80
+    dump_edge_histogram: false
+    dump_edge_histogram_path: mia_rep/edge_histogram.pkl
+    visualize_adj: true
+    TAD_density: 3.0
+    noise_level: 0.0
+    num_poi:
+    - 6
+    - 6
+    high_order_size: 20
+    nonrep_settings:
+      num_replicate_groups: 2
+      randomize_POI: false
+      random_TAD_prob: 0.0
+      random_loop_prob: 0.0
+      random_stripe_prob: 0.0
+      random_loop_TAD_prob: 0.0
+      random_stripe_TAD_prob: 0.0
+      random_dense_prob: 1.0
+      random_sigma: 5
+    rep_settings:
+      num_replicates: 2
+      seq_depth_variation: 0.0
+      high_order_noise: 0.3
+      high_order_noise_groups: 20
+  ChiaDrop_Generator:
+    enabled: false
+    num_bins: 140
+    noise_level: 10.0
+    TAD_density: 4.0
+    high_order_size: 20
+    visualize_adj: true
+    num_poi:
+    - 6
+    - 10
+    dump_edge_histogram_path: mia_rep/edge_histogram.pkl
+    nonrep_settings:
+      num_replicate_groups: 4
+      randomize_POI: true
+      peak_size:
+      - 10.0
+      - 35.0
+      convergent_peaks_proportion: 0.6
+      random_sigma: 2
+    rep_settings:
+      num_replicates: 3
+      seq_depth_variation: 0.5
+      real_peaks:
+        str_sigma: 5.0
+        width: 0.8
+      random_peaks:
+        str: 4.0
+        str_sigma: 2.0
+        width: 0.4
+        mean_dist: 4.0
+      background_gaussian_noise:
+        mean: 1.0
+        sigma: 0.5
+      real_edges:
+        max_dist: 50
+        density: 200.0
+        proportion_spanning: 0.1
+rep_methods:
+  SimpleCorrelation:
+    enabled: false
+  HiC-Rep-Baseline:
+    enabled: false
+    filter_size: 5
+    max_dist: 5e6
+    KR_balancing: true
+  HiC-Rep-Custom:
+    enabled: true
+    filter_size: 3
+    max_dist: 5e6
+  SparseSKPearson_Reg:
+    enabled: false
+    lambda: 0.1
+    max_iterations: 4000
+    tolerance: 1e-3
+  SparseSKPearson_Sym:
+    enabled: false
+    lambda: 0.1
+  ZeroScore:
+    enabled: false
+  HiC-Spector:
+    enabled: false
+    num_evecs: 20
+  GenomeDisco:
+    enabled: false
+    tmin: 3
+    tmax: 3
+    remove_diag: true
+  TopEval:
+    enabled: false
+    num_evals: 10
+    norm: false
+    p: 1
+    gamma: 1
+  TopEvalKDE:
+    enabled: false
+    num_evals: 1
+    norm: false
+    p: 1
+    gamma: 0.6
+    bandwidth: scott
+    num_points: 1000
+  TopEvalPearson:
+    enabled: false
+    num_evals: 10
+    norm: false
+  TopEvalCosine:
+    enabled: false
+    num_evals: 10
+    norm: false
+  TopEvalWasserstein:
+    enabled: false
+    num_evals: 10
+    norm: false
+  EigenvectorFilter:
+    enabled: false
+    max_evals: 20
+    kernel:
+    - -1
+    - 1
+    initial_gaussian: 0.7
+    sigma_h: 5
+    sigma_v: 5
+    importance_pow: 2
+    sigma_h_max: 7.0
+    epair_lower_bound: 1
+  EigenvectorFilterStar:
+    enabled: false
+    max_evals: 20
+    kernel:
+    - -1
+    - 1
+    initial_gaussian: 0.7
+    sigma_h: 4
+    sigma_v: 1.5
+    importance_pow: 1
+    sigma_h_max: 7.0
+    epair_lower_bound: 1
+  LearnedEigenvectorFilter:
+    enabled: false
+    model_path: models/eigenfilter.pth
+  LearnedEigenvectorCNN:
+    enabled: false
+    model_path: models/eigenCNN.pth
+  TensorTopEval:
+    enabled: false
+  HungarianCosine:
+    enabled: false
+  HungarianPearson:
+    enabled: false
+  HungarianMax:
+    enabled: false
+  HungarianEM:
+    enabled: false
+  OtCosine:
+    enabled: false
+  FastMatchCosine:
+    enabled: false
+  FastMatchCosineFiltered:
+    enabled: false
+    sigma: 2
+  SparseSKCosine:
+    enabled: false
+  SparseSKCosineFiltered:
+    enabled: false
+    sigma: 2
+  SparseSKCosine_Reg:
+    enabled: false
+    lambda: 0.1
+  SK_lam_1ep2:
+    enabled: false
+  SK_lam_1ep1:
+    enabled: false
+  SK_lam_1ep0:
+    enabled: false
+  SK_lam_1em1:
+    enabled: false
+  SK_lam_1em2:
+    enabled: false
+  SK_lam_1em3:
+    enabled: false
+  SK_lam_1em4:
+    enabled: false
+  LP_procedure:
+    enabled: false
+expansion_methods:
+  expansion_methods: null
+  enabled: false
+  default_method: TopEval
+  filter:
+    Clique: false
+    Star: false
+    Line: false
+    RankClique: false
+    ClusteringClique: false
+    PrintEigenspectrum: false
+noise_methods:
+  data_source: ChIA_Drop
+  num_levels: 10
+  visualize_adj: true
+  on_pair: false
+eigenfilter_learning:
+  default_expansion: Clique
+  override_k: 20
+  num_workers: 16
+  model_path: out/models/{architecture}/{architecture}_epoch_{epoch}.pth
+  architecture: EigenCNN
+  train:
+    enabled: false
+    num_pairs: 20000
+    num_groups: 50
+    cache_path: out/cache/ML/data_cache.pkl
+    load_cache: true
+    num_epochs: 100
+    batch_size: 128
+    learning_rate: 0.001
+    weight_decay: 0.0001
+  validate:
+    enabled: false
+    cache_path: out/cache/ML/data_cache_validate.pkl
+    num_pairs: 128
+    num_groups: 10
+    epoch_to_load: 90

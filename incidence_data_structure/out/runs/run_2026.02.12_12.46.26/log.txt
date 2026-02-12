@@ -1,0 +1,58 @@
+2026-02-12 12:46:26,111 - INFO - Preprocessing SPRITE_GM12878
+2026-02-12 12:46:26,112 - INFO - rep fname list: {1: 'Data/GM12878-SPRITE.byChromosome.clusters.renameid.grouped'}
+2026-02-12 12:46:26,114 - INFO - Reading Data/GM12878-SPRITE.byChromosome.clusters.renameid.grouped...
+2026-02-12 12:47:59,427 - INFO - Subselect chr...
+2026-02-12 12:48:03,055 - INFO - Finding letter replicates...
+2026-02-12 12:48:04,006 - INFO - Found replicates: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+2026-02-12 12:48:04,015 - INFO - Preprocessing SPRITE GM12878: repA
+2026-02-12 12:48:04,016 - INFO - Filtering rep (letter)
+2026-02-12 12:48:04,314 - INFO - Encoding freq map...
+2026-02-12 12:48:04,669 - INFO - # vertices : 196
+2026-02-12 12:48:04,670 - INFO - # reads    : 78919
+2026-02-12 12:48:04,671 - INFO - # edges    : 20722
+2026-02-12 12:48:04,923 - INFO - Preprocessing SPRITE GM12878: repB
+2026-02-12 12:48:04,925 - INFO - Filtering rep (letter)
+2026-02-12 12:48:05,362 - INFO - Encoding freq map...
+2026-02-12 12:48:05,793 - INFO - # vertices : 196
+2026-02-12 12:48:05,794 - INFO - # reads    : 68415
+2026-02-12 12:48:05,795 - INFO - # edges    : 18213
+2026-02-12 12:48:06,017 - INFO - Preprocessing SPRITE GM12878: repC
+2026-02-12 12:48:06,019 - INFO - Filtering rep (letter)
+2026-02-12 12:48:06,339 - INFO - Encoding freq map...
+2026-02-12 12:48:06,649 - INFO - # vertices : 196
+2026-02-12 12:48:06,652 - INFO - # reads    : 64663
+2026-02-12 12:48:06,653 - INFO - # edges    : 18050
+2026-02-12 12:48:06,838 - INFO - Preprocessing SPRITE GM12878: repD
+2026-02-12 12:48:06,839 - INFO - Filtering rep (letter)
+2026-02-12 12:48:07,166 - INFO - Encoding freq map...
+2026-02-12 12:48:07,419 - INFO - # vertices : 196
+2026-02-12 12:48:07,421 - INFO - # reads    : 57154
+2026-02-12 12:48:07,423 - INFO - # edges    : 16116
+2026-02-12 12:48:07,721 - INFO - Preprocessing SPRITE GM12878: repE
+2026-02-12 12:48:07,722 - INFO - Filtering rep (letter)
+2026-02-12 12:48:08,045 - INFO - Encoding freq map...
+2026-02-12 12:48:08,342 - INFO - # vertices : 196
+2026-02-12 12:48:08,343 - INFO - # reads    : 65457
+2026-02-12 12:48:08,344 - INFO - # edges    : 17737
+2026-02-12 12:48:08,545 - INFO - Preprocessing SPRITE GM12878: repF
+2026-02-12 12:48:08,548 - INFO - Filtering rep (letter)
+2026-02-12 12:48:08,874 - INFO - Encoding freq map...
+2026-02-12 12:48:09,172 - INFO - # vertices : 196
+2026-02-12 12:48:09,174 - INFO - # reads    : 63695
+2026-02-12 12:48:09,175 - INFO - # edges    : 16765
+2026-02-12 12:48:09,371 - INFO - Preprocessing SPRITE GM12878: repG
+2026-02-12 12:48:09,373 - INFO - Filtering rep (letter)
+2026-02-12 12:48:09,822 - INFO - Encoding freq map...
+2026-02-12 12:48:10,158 - INFO - # vertices : 196
+2026-02-12 12:48:10,160 - INFO - # reads    : 64440
+2026-02-12 12:48:10,161 - INFO - # edges    : 16622
+2026-02-12 12:48:10,332 - INFO - Preprocessing SPRITE GM12878: repH
+2026-02-12 12:48:10,333 - INFO - Filtering rep (letter)
+2026-02-12 12:48:10,683 - INFO - Encoding freq map...
+2026-02-12 12:48:11,010 - INFO - # vertices : 196
+2026-02-12 12:48:11,012 - INFO - # reads    : 52230
+2026-02-12 12:48:11,013 - INFO - # edges    : 14104
+2026-02-12 12:48:11,185 - INFO - Preprocessing SPRITE_H1_hESC_undiff_rep1
+2026-02-12 12:48:11,187 - INFO - rep fname list: {1: 'Data/H1-hESC_undiff_rep1.clusters', 2: 'Data/H1-hESC_undiff_rep2.clusters'}
+2026-02-12 12:48:11,189 - INFO - Reading Data/H1-hESC_undiff_rep1.clusters...
+2026-02-12 12:48:11,191 - ERROR - File not found: Data/H1-hESC_undiff_rep1.clusters

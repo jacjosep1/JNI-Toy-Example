@@ -1,0 +1,68 @@
+
+proportion: 1 # randomly subsample data if needed for efficiency
+
+ChIA_Drop:
+  enabled: false
+  cache_path: "out/cache/ChIA_Drop/{fname}.pkl"
+  load_cache: true # if true, attempt to load cache if it exists
+  save_cache: true # if true, saves to cache after running
+  force_cache: true # throw an error if the cache does not exist. Should set to true on local machine. 
+  path_template: "Data/GM12878-{protein}-Rep{rep}_comp_chr{chr}_FDR_0.2_pseudoGEM_500_enrichTest_master.txt"
+  bedgraph_path_template: "Data/GM12878-{protein}-Rep{rep}_comp_sing_FDR_0.2_PASS.bedgraph"
+  proteins: [CTCF, RNAPII, RAD21, SMC1A] # CTCF, RNAPII, RAD21, SMC1A
+  reps:     [1, 2, 3] # 1, 2, 3
+  visualize_adj: false # visualize adjacency matrix for expansion method
+
+SPRITE:
+  enabled: true
+  cache_path: "out/cache/SPRITE/{fname}.pkl"
+  load_cache: true
+  save_cache: true
+  force_cache: false
+  path_template: "Data/GM12878-SPRITE.byChromosome.clusters.renameid.grouped"
+  visualize_adj: false # visualize adjacency matrix for expansion method
+  data: 
+    GM12878:
+      enabled: true
+      fname: 
+        1: "Data/GM12878-SPRITE.byChromosome.clusters.renameid.grouped" # use multiple rows for >1 rep
+      format: Format_GM12878 # one of Format_GM12878,Format_HFFc6,Format_H1_hESC. Specified in preprocess/format_SPRITE.py
+      rep_type: "letter" # one of "none", "letter", "finder". "finder" requires "rep_finder" pickle file. 
+
+    H1_hESC_diff:
+      enabled: false
+      fname: 
+        1: "Data/H1-hESC_diff_rep1.clusters"
+      format: Format_H1_hESC
+      rep_type: "none"
+
+    H1_hESC_undiff_rep1:
+      enabled: tfalsee
+      fname: 
+        1: "Data/H1-hESC_undiff_rep1.clusters"
+        2: "Data/H1-hESC_undiff_rep2.clusters"
+      format: Format_H1_hESC
+      rep_type: "none"
+
+    HFFc6:
+      enabled: false
+      fname: 
+        1: "Data/HFFc6_rep1-3.clusters"
+      format: Format_HFFc6
+      rep_type: "finder"
+      rep_finder: "Data/HFFc6_sets.pickle"
+
+    F121mESC: #mouse
+      enabled: false
+      fname:
+        1: "Data/F121mESC_all_mm10.clusters"
+      format: Format_HFFc6
+      rep_type: "none"
+
+    P22_CB: #mouse
+      enabled: false
+      fname:
+        1: "Data/P22_CB_SPRITE_WT1_2-1000r.clusters"
+        2: "Data/P22_CB_SPRITE_WT2_2-1000r.clusters"
+      format: Format_HFFc6
+      rep_type: "none"
