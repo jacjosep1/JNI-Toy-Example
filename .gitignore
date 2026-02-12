@@ -1,6 +1,6 @@
 venv
 incidence_data_structure/Data
-incidence_data_structure/out/*
+incidence_data_structure/out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
