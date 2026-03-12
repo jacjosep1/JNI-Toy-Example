@@ -1,7 +1,7 @@
 name: "run"
 
 chr: "19"
-bin_size: 300e3 # in bp (e.g. 50e3 is 50kb)
+bin_size: 1 # in bp (e.g. 50e3 is 50kb)
 genomic_range_enabled: false
 genomic_range: [80e6,120e6] # in bp
 # Interesting regions:
